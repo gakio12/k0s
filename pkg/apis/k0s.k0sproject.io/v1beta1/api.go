@@ -61,6 +61,7 @@ func DefaultAPISpec() *APISpec {
 		BindAddress:            "0.0.0.0",
 		SANs:                   addresses,
 		Address:                publicAddress,
+		BindAddress:            "0.0.0.0",
 		ExtraArgs:              make(map[string]string),
 		TunneledNetworkingMode: false,
 	}
