@@ -61,7 +61,6 @@ func DefaultAPISpec() *APISpec {
 		BindAddress:            "0.0.0.0",
 		SANs:                   addresses,
 		Address:                publicAddress,
-		BindAddress:            "0.0.0.0",
 		ExtraArgs:              make(map[string]string),
 		TunneledNetworkingMode: false,
 	}
@@ -108,18 +107,14 @@ func (a *APISpec) APIServerAddress() string {
 }
 
 func (a *APISpec) getAPIServerAddress(address string) string {
-	switch address {
-	case "0.0.0.0":
-		return "localhost"
-	default:
-		return address
-	}
+	return address
 }
 
 // Sans return the given SANS plus all local adresses and externalAddress if given
 func (a *APISpec) Sans() []string {
 	sans, _ := iface.AllAddresses()
 	sans = append(sans, a.Address)
+	sans = append(sans, a.BindAddress)
 	sans = append(sans, a.SANs...)
 	if a.ExternalAddress != "" {
 		sans = append(sans, a.ExternalAddress)
